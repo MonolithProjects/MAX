@@ -21,8 +21,7 @@ import out_kvm
 # Main functions
 def main():
    print(modules_path)
-   print('test')
-   in_testing.cli_test() 
+   out_kvm.test_kvm_connection()
 
 if __name__=="__main__":
    main()
