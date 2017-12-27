@@ -1,0 +1,4 @@
+- enable "--listen" argument for libvirt
+  uncomment LIBVIRTD_ARGS="--listen" in /etc/sysconfig/libvirtd and restart libvirt
+  If not using TLS, disable it in /etc/libvirt/libvirt.conf
+
