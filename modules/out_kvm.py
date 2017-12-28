@@ -3,12 +3,14 @@ import sys
 import libvirt
 import ConfigParser
 
-# Authenticate
+# Read credentials
 config = ConfigParser.ConfigParser()
 config.read("/etc/max.conf")
 IP = config.get("MAXglobal", "IP")
 KVM_USER = config.get("MAXglobal", "KVM_USER")
 KVM_PASS = config.get("MAXglobal", "KVM_USER")
+
+# Request credentials
 def request_cred(credentials, user_data):
    for credential in credentials:
       if credential[0] == libvirt.VIR_CRED_AUTHNAME:
@@ -16,12 +18,21 @@ def request_cred(credentials, user_data):
       elif credential[0] == libvirt.VIR_CRED_PASSPHRASE:
          credential[4] = KVM_PASS
    return 0
-auth = [[libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE], request_cred, None]
+
+# Read config file
+def readConfig():
+   config = ConfigParser.ConfigParser()
+   config.read("/etc/max.conf")
+   IP = config.get("MAXglobal", "IP")
+   KVM_USER = config.get("MAXglobal", "KVM_USER")
+   KVM_PASS = config.get("MAXglobal", "KVM_USER")
+
 
 # KVM connection
 def connKvm(c):
    global conn
    if c == 1:
+      auth = [[libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE], request_cred, None]
       conn = libvirt.openAuth('qemu+tcp://' + IP + '/system', auth, 0)
       if conn == None:
          print('Failed to open connection to KVM')
@@ -128,25 +139,3 @@ def xmlVm(vmName):
    print(raw_xml)
    connKvm(0)
 
-# listAllDomains flags
-#all 0
-#VIR_CONNECT_LIST_DOMAINS_ACTIVE
-#VIR_CONNECT_LIST_DOMAINS_INACTIVE
-#VIR_CONNECT_LIST_DOMAINS_PERSISTENT
-#VIR_CONNECT_LIST_DOMAINS_TRANSIENT
-#VIR_CONNECT_LIST_DOMAINS_RUNNING
-#VIR_CONNECT_LIST_DOMAINS_PAUSED
-#VIR_CONNECT_LIST_DOMAINS_SHUTOFF
-#VIR_CONNECT_LIST_DOMAINS_OTHER
-#VIR_CONNECT_LIST_DOMAINS_MANAGEDSAVE
-#VIR_CONNECT_LIST_DOMAINS_NO_MANAGEDSAVE
-#VIR_CONNECT_LIST_DOMAINS_AUTOSTART
-#VIR_CONNECT_LIST_DOMAINS_NO_AUTOSTART
-#VIR_CONNECT_LIST_DOMAINS_HAS_SNAPSHOT
-#VIR_CONNECT_LIST_DOMAINS_NO_SNAPSHOT
-
-### Tests...
-#def test_out_kvm():
-#   dom0 = conn.lookupByName("Windows")
-#   print dom0.info()
-#   print dom0.state(0)
