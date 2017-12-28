@@ -44,10 +44,9 @@ def discoverVms():
    connKvm(1)
    vms = conn.listAllDomains(0)
    if len(vms) != 0:
-      for vm in vms:
-         print(' ' + vm.name())
+      return(vms)
    else:
-      print(' No VMs')
+      return('none')
    connKvm(0)
 
 # Discover Active VMs
@@ -55,10 +54,9 @@ def discoverActiveVms():
    connKvm(1)
    vms = conn.listAllDomains(1)
    if len(vms) != 0:
-      for vm in vms:
-         print(' ' + vm.name())
+      return(vms)  
    else:
-      pritn('No active VMs.')
+      return('none')
    connKvm(0)
 
 # Discover Inactive VMs
@@ -66,10 +64,9 @@ def discoverInactiveVms():
    connKvm(1)
    vms = conn.listAllDomains(2)
    if len(vms) != 0:
-      for vm in vms:
-         print(' ' + vm.name())
+      return(vms) 
    else:
-      pritn('No inactive VMs.')
+      return('none')
    connKvm(0)
 
 # Start VM
@@ -78,8 +75,7 @@ def startVm(vmName):
    vm = conn.lookupByName(vmName)
    state = vm.isActive()
    if state == True:
-      print('VM is already up.')
-      return
+      return('existing')
    vm.create()
    connKvm(0)
 
@@ -89,8 +85,7 @@ def shutVm(vmName):
    vm = conn.lookupByName(vmName)
    state = vm.isActive()
    if state == False:
-      print('VM is already down.')
-      return
+      return('existing')
    vm.shutdown()
    connKvm(0)
 
@@ -100,8 +95,7 @@ def rebootVm(vmName):
    vm = conn.lookupByName(vmName)
    state = vm.isActive()
    if state == False:
-      print('VM is already down.')
-      return
+      return('existing')
    vm.reboot()
    connKvm(0)
 
@@ -110,10 +104,20 @@ def destroyVm(vmName):
    connKvm(1)
    vm = conn.lookupByName(vmName)
    state = vm.isActive()
-   if state == False:
-      print('VM is already down.')
-      return
    vm.destroy()
+   connKvm(0)
+
+# State of the VM
+def stateVm(vmName):
+   connKvm(1)
+   vm = conn.lookupByName(vmName)
+   state = vm.isActive()
+   if state == True:
+      return('on')
+   elif state == False:
+      return('off')
+   else:
+      return('unknown')
    connKvm(0)
 
 # XML VM

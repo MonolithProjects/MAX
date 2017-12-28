@@ -20,14 +20,22 @@ import out_kvm
 
 # Main functions
 def main():
+   ### Tests :-)
    print(modulesPath)
    out_kvm.testKvmConnection()
    print('------v')
-   out_kvm.rebootVm(vmName="zero1") 
+   #out_kvm.rebootVm(vmName="zero1") 
    print('------v')
-   #out_kvm.destroyVm(vmName="zero1")
-   
+   out_kvm.startVm(vmName="zero1")
+   out_kvm.stateVm(vmName="zero1")
+   if out_kvm.stateVm(vmName="zero1") == 'off':
+      print('Ta je dole...')
+   else:
+      print('Ta je hore')   
 
+   #for vm in out_kvm.discoverVms():
+   #   print(vm.name() + ' is my VM.')
+   out_kvm.discoverVms()
 
 if __name__=="__main__":
    main()
