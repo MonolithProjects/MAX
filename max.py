@@ -4,8 +4,8 @@
 import sys, os
 
 # Find modules folder path
-modules_path = os.path.abspath(os.path.dirname(sys.argv[0])) + '/modules'
-sys.path.append(modules_path)
+modulesPath = os.path.abspath(os.path.dirname(sys.argv[0])) + '/modules'
+sys.path.append(modulesPath)
 
 # Global variables
 global start_1
@@ -20,8 +20,14 @@ import out_kvm
 
 # Main functions
 def main():
-   print(modules_path)
-   out_kvm.test_kvm_connection()
+   print(modulesPath)
+   out_kvm.testKvmConnection()
+   print('------v')
+   out_kvm.rebootVm(vmName="zero1") 
+   print('------v')
+   #out_kvm.destroyVm(vmName="zero1")
+   
+
 
 if __name__=="__main__":
    main()
