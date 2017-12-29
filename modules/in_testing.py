@@ -1,3 +1,5 @@
 
-def cli_test():
-   print('CLI test')
+def command():
+   value = raw_input("State of: ")
+   return(value)
+
