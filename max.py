@@ -1,16 +1,16 @@
 #!/bin/env python
 
 # Import system modules
-import sys, os, getopt
+import sys, os
 
 # Find modules folder path
 modulesPath = os.path.abspath(os.path.dirname(sys.argv[0])) + '/modules'
 sys.path.append(modulesPath)
 
-# Global variables
-global start_1
-global stop_1
-global state_1
+# Clear global variables
+mclass = ''
+mobject = ''
+mvalue = ''
 
 # Import User Interface MAX modules
 import ui_testing
@@ -35,8 +35,10 @@ def pars_arg():
       arg = 'null'
       return
    if arg == 'cli':
-      value = raw_input('MAX cli> ')
-      #dummyCommand
+      global mclass
+      global mobject
+      global mvalue
+      mclass, mobject, mvalue = ui_cli.cli()
    else:
       print('This argument is not suppeorted.')
       if 'cli' in str(sys.argv[1:]):
@@ -46,11 +48,13 @@ def pars_arg():
 
 # Main function
 def main():
+   pars_arg()
    #vmName = ui_testing.command()
+   print(mclass)
+   print(mobject)
+   print(mvalue)
    return
 
 if __name__=="__main__":
-    pars_arg()
-    print('Just a test.')
-    #main()
+    main()
 
