@@ -31,7 +31,7 @@ def readConfig():
 # KVM connection
 def connKvm(c):
    global conn
-   if c == 1:
+   if c == 100:
       auth = [[libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE], request_cred, None]
       conn = libvirt.openAuth('qemu+tcp://' + IP + '/system', auth, 0)
       if conn == None:
@@ -45,74 +45,74 @@ def connKvm(c):
 
 # Test HV connection
 def testKvmConnection():
-   connKvm(1)
+   connKvm(100)
    HVname = conn.getHostname()
    print('Hyper-Visor ' + HVname + ' is accessible.')
    connKvm(0)
 
 # Discover VMs
 def discoverVms():
-   connKvm(1)
+   connKvm(100)
    vms = conn.listAllDomains(0)
    if len(vms) != 0:
       return(vms)
    else:
-      return('none')
+      return('0')
    connKvm(0)
 
 # Discover Active VMs
 def discoverActiveVms():
-   connKvm(1)
+   connKvm(100)
    vms = conn.listAllDomains(1)
    if len(vms) != 0:
       return(vms)  
    else:
-      return('none')
+      return('0')
    connKvm(0)
 
 # Discover Inactive VMs
 def discoverInactiveVms():
-   connKvm(1)
+   connKvm(100)
    vms = conn.listAllDomains(2)
    if len(vms) != 0:
       return(vms) 
    else:
-      return('none')
+      return('0')
    connKvm(0)
 
 # Start VM
 def startVm(vmName):
-   connKvm(1)
+   connKvm(100)
    vm = conn.lookupByName(vmName)
    state = vm.isActive()
    if state == True:
-      return('existing')
+      return('101')
    vm.create()
    connKvm(0)
 
 # Shutdown VM
 def shutVm(vmName):
-   connKvm(1)
+   connKvm(100)
    vm = conn.lookupByName(vmName)
    state = vm.isActive()
    if state == False:
-      return('existing')
+      return('101')
    vm.shutdown()
    connKvm(0)
 
 # Shutdown VM
 def rebootVm(vmName):
-   connKvm(1)
+   connKvm(100)
    vm = conn.lookupByName(vmName)
    state = vm.isActive()
    if state == False:
-      return('existing')
+      return('101')
    vm.reboot()
    connKvm(0)
 
 # Destroy VM
 def destroyVm(vmName):
-   connKvm(1)
+   connKvm(100)
    vm = conn.lookupByName(vmName)
    state = vm.isActive()
    vm.destroy()
@@ -120,22 +120,21 @@ def destroyVm(vmName):
 
 # State of the VM
 def stateVm(vmName):
-   connKvm(1)
+   connKvm(100)
    vm = conn.lookupByName(vmName)
    state = vm.isActive()
    if state == True:
-      return('on')
+      return('100')
    elif state == False:
-      return('off')
+      return('0')
    else:
-      return('unknown')
+      return('101')
    connKvm(0)
 
 # XML VM
 def xmlVm(vmName):
-   connKvm(1)
+   connKvm(100)
    vm = conn.lookupByName(vmName)
    raw_xml = vm.XMLDesc(0)
    print(raw_xml)
    connKvm(0)
-
