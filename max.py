@@ -12,9 +12,11 @@ global start_1
 global stop_1
 global state_1
 
-# Import MAX modules
-import in_testing
-import out_kvm
+# Import User Interface MAX modules
+import ui_testing
+
+# Import Control MAX modules
+import cl_kvm
 
 ############################################################
 
@@ -22,9 +24,9 @@ import out_kvm
 def main():
    ### Tests :-)
    print(modulesPath)
-   vmName = in_testing.command()
+   vmName = ui_testing.command()
    print('------v')
-   if out_kvm.stateVm(vmName) == 'on':
+   if cl_kvm.stateVm(vmName) == 'on':
       print('Running')
    else:
       print('Stopped')
