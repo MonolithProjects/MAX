@@ -50,6 +50,7 @@ def pars_arg():
 def main():
    pars_arg()
    #vmName = ui_testing.command()
+   print('Test result --------------v')
    print(mclass)
    print(mobject)
    print(mvalue)
