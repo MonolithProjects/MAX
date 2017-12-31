@@ -7,6 +7,7 @@ def cli():
    command = raw_input('MAX cli> ')
    command = command.split()
    args = len(command)
+   print(command)###
    if args > 0: 
       mclass = command[0]
       checkMclass(mclass)
@@ -26,9 +27,6 @@ def checkMclass(mclass):
    if mclass not in ('vm', 'light', 'blinds'):
       helpMclass()
       cli()
-   elif mclass == 'vm' and not mobject:
-      helpMclassVm()
-      cli()
 
 def checkMobject(mobject):
    if mclass == 'vm':
@@ -39,7 +37,7 @@ def checkMobject(mobject):
 def checkMvalue(mvalue):
    if mclass == 'vm':
       if mvalue == 'help' or mvalue == '' \
-      or mvalue not in ('start', 'stop', 'reboot', 'poweroff', 'state', 'os-state'):
+      or mvalue not in ("start", 'stop', 'reboot', 'poweroff', 'state', 'os-state'):
          helpMclassVm()
          cli()
 
@@ -59,16 +57,20 @@ Supported general commands:
    blinds
    light
    vm
+   
+   Combine with "help" for more details.
    ''')
    
 def helpMclassVm():
    print('''
 Supported vm commands:
-   vm <vm name> start
-   vm <vm name> stop
-   vm <vm name> reboot
-   vm <vm name> poweroff
-   vm <vm name> state
-   vm <vm name> os-state
+   vm                     (command will list all VMs)
+   vm <vm name> start     (command will start VM)
+   vm <vm name> stop      (command will shutdown VM)
+   vm <vm name> reboot    (command will reboot VM)
+   vm <vm name> poweroff  (command will force poweroff VM)
+   vm <vm name> state     (command will check VM state)
+   vm <vm name> os-state  (command will check the OS state)
+   vm help                (display this page)
    ''')
 
