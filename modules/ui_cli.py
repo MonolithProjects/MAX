@@ -1,3 +1,4 @@
+import fnmatch
 
 def cli():
    global mclass, mobject, mvalue
@@ -7,7 +8,13 @@ def cli():
    command = raw_input('MAX cli> ')
    command = command.split()
    args = len(command)
-   print(command)###
+   for i in range(args):
+      if i == 0:
+         mclass = command[i]
+      elif i == 1:
+         mobject = command[i]
+      elif i == 2:
+         mvalue = command[i]
    if args > 0: 
       mclass = command[0]
       checkMclass(mclass)
@@ -24,22 +31,48 @@ def cli():
    return[mclass, mobject, mvalue]
 
 def checkMclass(mclass):
-   if mclass not in ('vm', 'light', 'blinds'):
+   if mclass not in ('vm', 'lifx', 'blinds'):
       helpMclass()
       cli()
 
 def checkMobject(mobject):
    if mclass == 'vm':
-      if mobject == 'help':
+      if mobject == 'help' \
+      or mobject != '' and mvalue == '':
          helpMclassVm()
          cli()
+   if mclass == 'lifx':
+      if mobject == 'help' \
+      or mobject != '' and mvalue == '':
+         helpMclassLifx()
+         cli()
+
+   if mclass == 'blinds':
+      if mobject == 'help' \
+      or mobject != '' and mvalue == '':
+         helpMclassBlinds()
+         cli()
+
 
 def checkMvalue(mvalue):
    if mclass == 'vm':
-      if mvalue == 'help' or mvalue == '' \
-      or mvalue not in ("start", 'stop', 'reboot', 'poweroff', 'state', 'os-state'):
+      if mvalue == 'help' \
+      or mvalue not in ('start', 'stop', 'reboot', 'poweroff', 'state', 'os-state'):
          helpMclassVm()
          cli()
+
+   if mclass == 'lifx':
+      if mvalue == 'help' \
+      or mvalue not in ('on', 'off', 'off-slow', 'rgb', 'state'):
+         helpMclassLifx()
+         cli()
+
+   if mclass == 'blinds':
+      if mvalue == 'help' \
+      or mvalue not in ('on', 'off', 'off-slow', 'rgb', 'state'):
+         helpMclassBlinds()
+         cli()
+
 
 def clearCommands():
    mclass = ''
@@ -49,13 +82,15 @@ def clearCommands():
 def helpGeneral():
    helpMclass()
    helpMclassVm()
+   helpMclassLifx()
+   helpMclassBlinds()
    cli()
 
 def helpMclass():
    print('''
 Supported general commands:
    blinds
-   light
+   lifx
    vm
    
    Combine with "help" for more details.
@@ -72,5 +107,29 @@ Supported vm commands:
    vm <vm name> state     (command will check VM state)
    vm <vm name> os-state  (command will check the OS state)
    vm help                (display this page)
+   ''')
+
+def helpMclassLifx():
+   print('''
+Supported lifx commands:
+   lifx                                              (command will list all LIFX bulbs)
+   lifx <bulb name> on                               (command will lite on a bulb)
+   lifx <bulb name> off                              (command will lite off a bulb)
+   lifx <bulb name> off-slow                         (command will lite off/dim a bulb)
+   lifx <bulb name> rgb [000-255][000-255][000-255]  (command will set RGB color)
+   lifx <bulb name> state                            (command will check bulb state)
+   lifx help                                         (display this page)
+   ''')
+
+def helpMclassBlinds(): #TODO
+   print('''
+Supported blinds commands:
+   blinds                (command will list all Blids)
+   blinds <blinds name> 
+   blinds <blinds name>
+   blinds <blinds name>
+   blinds <blinds name> 
+   blinds <blinds name>
+   blinds help           (display this page)
    ''')
 
