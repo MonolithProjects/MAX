@@ -1,4 +1,3 @@
-import fnmatch
 
 def cli():
    global mclass, mobject, mvalue
