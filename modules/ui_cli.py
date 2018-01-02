@@ -1,4 +1,6 @@
 
+import re
+
 def cli():
    global mclass, mobject, mvalue
    mclass = ''
@@ -62,13 +64,22 @@ def checkMvalue(mvalue):
 
    if mclass == 'lifx':
       if mvalue == 'help' \
-      or mvalue not in ('on', 'off', 'off-slow', 'rgb', 'state'):
-         helpMclassLifx()
-         cli()
+      or mvalue not in ('on', 'off', 'off-slow', 'state'):
+         if re.search('rgb-([0-2][0-5][0-5])-([0-2][0-5][0-5])-([0-2][0-5][0-5])', mvalue):
+            return
+         else:
+            helpMclassLifx()
+            cli()
 
    if mclass == 'blinds':
       if mvalue == 'help' \
       or mvalue not in ('on', 'off', 'off-slow', 'rgb', 'state'):
+         for i in range(0, 100):
+            if 'hight-'+str(i) == mvalue:
+               return
+         for i in range(0, 180):   
+            if 'rotate-'+str(i) == mvalue:
+               return
          helpMclassBlinds()
          cli()
 
@@ -111,24 +122,23 @@ Supported vm commands:
 def helpMclassLifx():
    print('''
 Supported lifx commands:
-   lifx                                              (command will list all LIFX bulbs)
-   lifx <bulb name> on                               (command will lite on a bulb)
-   lifx <bulb name> off                              (command will lite off a bulb)
-   lifx <bulb name> off-slow                         (command will lite off/dim a bulb)
-   lifx <bulb name> rgb [000-255][000-255][000-255]  (command will set RGB color)
-   lifx <bulb name> state                            (command will check bulb state)
-   lifx help                                         (display this page)
+   lifx                                                (command will list all LIFX bulbs)
+   lifx <bulb name> on                                 (command will lite on a bulb)
+   lifx <bulb name> off                                (command will lite off a bulb)
+   lifx <bulb name> off-slow                           (command will lite off/dim a bulb)
+   lifx <bulb name> rgb-[000-255]-[000-255]-[000-255]  (command will set RGB color)
+   lifx <bulb name> state                              (command will check bulb state)
+   lifx help                                           (display this page)
    ''')
 
-def helpMclassBlinds(): #TODO
+def helpMclassBlinds():
    print('''
 Supported blinds commands:
-   blinds                (command will list all Blids)
-   blinds <blinds name> 
-   blinds <blinds name>
-   blinds <blinds name>
-   blinds <blinds name> 
-   blinds <blinds name>
-   blinds help           (display this page)
+   blinds                               (command will list all blids)
+   blinds <blinds name> up              (command will bring the blinds up)
+   blinds <blinds name> down            (command will bring the blinds down) 
+   blinds <blinds name> hight-[0-100]   (command will shade part of the window in %) 
+   blinds <blinds name> rotate-[0-180]  (command will rotate)
+   blinds help                          (display this page)
    ''')
 
