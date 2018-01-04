@@ -40,11 +40,28 @@ def pars_arg():
       global mvalue
       mclass, mobject, mvalue = ui_cli.cli()
    else:
-      print('This argument is not suppeorted.')
+      print('This argument is not supported.')
       if 'cli' in str(sys.argv[1:]):
          print('Did you mean this?')
          print('        max.py cli')
       exit(1)
+
+def runCmd():
+   global mclass
+   global mobject
+   global mvalue
+   command = ''
+   if mclass == 'vm':
+      mclass = 'cl_kvm'
+      if mobject:
+         vmName = mobject
+      else:
+         command = 'discoverVms()'
+         vms = cl_kvm.discoverVms()
+         for vm in vms:
+            print(vm.name()) 
+
+   runcommand = mclass + '.' + command
 
 # Main function
 def main():
@@ -54,8 +71,9 @@ def main():
    print(mclass)
    print(mobject)
    print(mvalue)
-   return
+   runCmd()
 
 if __name__=="__main__":
-    main()
+   while True: 
+      main()
 
