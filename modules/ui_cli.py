@@ -1,6 +1,8 @@
 
 import re
 
+#Consider modules Cmd (in cmd) or readline 
+
 def cli():
    global mclass, mobject, mvalue
    mclass = ''
@@ -33,6 +35,8 @@ def cli():
 
 def checkMclass(mclass):
    if mclass not in ('vm', 'lifx', 'blinds'):
+      if mclass == 'exit':
+         exit(0)
       helpMclass()
       cli()
 
