@@ -35,9 +35,7 @@ def pars_arg():
       arg = 'null'
       return
    if arg == 'cli':
-      global mclass
-      global mobject
-      global mvalue
+      global mclass, mobject, mvalue
       mclass, mobject, mvalue = ui_cli.cli()
    else:
       print('This argument is not supported.')
@@ -46,31 +44,60 @@ def pars_arg():
          print('        max.py cli')
       exit(1)
 
+# CLI
 def runCmd():
-   global mclass
-   global mobject
-   global mvalue
-   command = ''
-   if mclass == 'vm':
-      mclass = 'cl_kvm'
-      if mobject:
-         vmName = mobject
-      else:
-         command = 'discoverVms()'
-         vms = cl_kvm.discoverVms()
-         for vm in vms:
-            print(vm.name()) 
+   global mclass, mobject, mvalue
+   
+  # VM
+  if mclass == 'vm':
+      if mobject == '' and mvalue == '':
+         ui_cli.displayVmList()
+      elif mvalue == 'start':
+         state = cl_kvm.startVm(mobject)
+      elif mvalue == 'stop':
+         state = cl_kvm.shutVm(mobject)
+      elif mvalue == 'reboot':
+         state = cl_kvm.rebootVm(mobject)
+      elif mvalue == 'poweroff':
+         state = cl_kvm.destroyVm(mobject)
+      elif mvalue == 'state':
+         state = cl_kvm.stateVm(mobject)
 
-   runcommand = mclass + '.' + command
+      if state is None:
+         print('Success')
+      else: 
+         if state == '100':
+            state = 'active'
+         elif state == '0':
+            state = 'off'
+         elif state == '101':
+            state = 'unable to ' + mvalue
+         print('VM ' + mobject + ' is ' + state)
+         
+   # Lifx
+   if mclass == 'lifx':
+      if mobject == '' and mvalue == '':
+         ui_cli.displayLifxList()
+      elif mvalue == 'state':
+         ui_cli.displayLifxState()
+
+   # Blinds
+   if mclass == 'blinds':
+      if mobject == '' and mvalue == '':
+         ui_cli.displayBlindsList()
+      elif mvalue == 'state':
+         ui_cli.displayBlindsState()
+
+
 
 # Main function
 def main():
    pars_arg()
-   #vmName = ui_testing.command()
-   print('Test result --------------v')
-   print(mclass)
-   print(mobject)
-   print(mvalue)
+   #vmName = ui_testing.command()        #TEST
+   #print('Test result --------------v')  #TEST
+   #print(mclass)                         #TEST
+   #print(mobject)                        #TEST
+   #print(mvalue)                         #TEST
    runCmd()
 
 if __name__=="__main__":

@@ -5,9 +5,7 @@ import re
 
 def cli():
    global mclass, mobject, mvalue
-   mclass = ''
-   mobject = ''
-   mvalue = ''
+   clearCommands()
    command = raw_input('MAX cli> ')
    command = command.split()
    args = len(command)
@@ -32,6 +30,7 @@ def cli():
       del command[3:]
       clearCommands()
    return[mclass, mobject, mvalue]
+
 
 def checkMclass(mclass):
    if mclass not in ('vm', 'lifx', 'blinds'):
@@ -62,7 +61,7 @@ def checkMobject(mobject):
 def checkMvalue(mvalue):
    if mclass == 'vm':
       if mvalue == 'help' \
-      or mvalue not in ('start', 'stop', 'reboot', 'poweroff', 'state', 'os-state'):
+      or mvalue not in ('start', 'stop', 'reboot', 'poweroff', 'state'):
          helpMclassVm()
          cli()
 
@@ -87,11 +86,28 @@ def checkMvalue(mvalue):
          helpMclassBlinds()
          cli()
 
-
 def clearCommands():
    mclass = ''
    mobject = ''
    mvalue = ''
+
+def displayVmList():
+   print('Oops!')
+
+def displayVmState():
+   print('Oops!')
+
+def displayLifxList():
+   print('Oops!')
+
+def displayLifxState():
+   print('Oops!')
+
+def doslpayBlindsList():
+   print('Oops!')
+
+def doslpayBlindsState():
+   print('Oops!')
 
 def helpGeneral():
    helpMclass()
@@ -119,7 +135,6 @@ Supported vm commands:
    vm <vm name> reboot    (command will reboot VM)
    vm <vm name> poweroff  (command will force poweroff VM)
    vm <vm name> state     (command will check VM state)
-   vm <vm name> os-state  (command will check the OS state)
    vm help                (display this page)
    ''')
 
@@ -143,6 +158,10 @@ Supported blinds commands:
    blinds <blinds name> down            (command will bring the blinds down) 
    blinds <blinds name> hight-[0-100]   (command will shade part of the window in %) 
    blinds <blinds name> rotate-[0-180]  (command will rotate)
+   blinds <blinds name> state           (command will check the blinds state)
    blinds help                          (display this page)
    ''')
 
+
+
+ 
