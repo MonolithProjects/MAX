@@ -48,8 +48,8 @@ def pars_arg():
 def runCmd():
    global mclass, mobject, mvalue
    
-  # VM
-  if mclass == 'vm':
+   # VM
+   if mclass == 'vm':
       if mobject == '' and mvalue == '':
          ui_cli.displayVmList()
       elif mvalue == 'start':
@@ -72,7 +72,7 @@ def runCmd():
             state = 'off'
          elif state == '101':
             state = 'unable to ' + mvalue
-         print('VM ' + mobject + ' is ' + state)
+         print('Virtual Machine ' + mobject + ' is ' + state)
          
    # Lifx
    if mclass == 'lifx':

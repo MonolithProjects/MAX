@@ -87,6 +87,7 @@ def checkMvalue(mvalue):
          cli()
 
 def clearCommands():
+   global mclass, mobject, mvalue
    mclass = ''
    mobject = ''
    mvalue = ''
@@ -122,6 +123,7 @@ Supported general commands:
    blinds
    lifx
    vm
+   exit
    
    Combine with "help" for more details.
    ''')
