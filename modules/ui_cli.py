@@ -33,7 +33,7 @@ def cli():
 
 
 def checkMclass(mclass):
-   if mclass not in ('vm', 'lifx', 'blinds'):
+   if mclass not in ('vm', 'lifx', 'blinds', 'cec'):
       if mclass == 'exit':
          exit(0)
       helpMclass()
@@ -45,6 +45,7 @@ def checkMobject(mobject):
       or mobject != '' and mvalue == '':
          helpMclassVm()
          cli()
+
    if mclass == 'lifx':
       if mobject == 'help' \
       or mobject != '' and mvalue == '':
@@ -56,6 +57,13 @@ def checkMobject(mobject):
       or mobject != '' and mvalue == '':
          helpMclassBlinds()
          cli()
+
+   if mclass == 'cec':
+      if mobject == 'help' \
+      or mobject != '' and mvalue == '':
+         helpMclassCec()
+         cli()
+
 
 
 def checkMvalue(mvalue):
@@ -86,6 +94,12 @@ def checkMvalue(mvalue):
          helpMclassBlinds()
          cli()
 
+   if mclass == 'cec':
+      if mvalue == 'help' \
+      or mvalue not in ('on', 'off', 'state'):
+         helpMclassCec()
+         cli()
+
 def clearCommands():
    global mclass, mobject, mvalue
    mclass = ''
@@ -112,10 +126,16 @@ def displayLifxList():
 def displayLifxState():
    print('Oops!')
 
-def doslpayBlindsList():
+def displayBlindsList():
    print('Oops!')
 
-def doslpayBlindsState():
+def displayBlindsState():
+   print('Oops!')
+
+def displayCecList():
+   print('Oops!')
+
+def displayCecState():
    print('Oops!')
 
 def helpGeneral():
@@ -123,55 +143,81 @@ def helpGeneral():
    helpMclassVm()
    helpMclassLifx()
    helpMclassBlinds()
+   helpMclassCec()
    cli()
 
 def helpMclass():
    print('''
-Supported general commands:
-   blinds
-   lifx
-   vm
-   exit
-   
-   Combine with "help" for more details.
++---------------------------------------+
+|  Supported general commands:          |
++---------------------------------------+
+|  blinds                               |
+|  cec                                  |
+|  lifx                                 |
+|  vm                                   |
+|  exit                                 |
++---------------------------------------+   
+|  Combine with "help" for more details.|
++---------------------------------------+
    ''')
    
 def helpMclassVm():
    print('''
-Supported vm commands:
-   vm                     (command will list all VMs)
-   vm <vm name> start     (command will start VM)
-   vm <vm name> stop      (command will shutdown VM)
-   vm <vm name> reboot    (command will reboot VM)
-   vm <vm name> poweroff  (command will force poweroff VM)
-   vm <vm name> state     (command will check VM state)
-   vm help                (display this page)
++----------------------------------------------------------+
+|  Supported vm commands:                                  |
++----------------------------------------------------------+
+|  vm                     (command will list all VMs)      |
+|  vm <vm name> start     (command will start VM)          |
+|  vm <vm name> stop      (command will shutdown VM)       |
+|  vm <vm name> reboot    (command will reboot VM)         |
+|  vm <vm name> poweroff  (command will force poweroff VM) |
+|  vm <vm name> state     (command will check VM state)    |
+|  vm help                (display this page)              |
++----------------------------------------------------------+
    ''')
 
 def helpMclassLifx():
    print('''
-Supported lifx commands:
-   lifx                                                (command will list all LIFX bulbs)
-   lifx <bulb name> on                                 (command will lite on a bulb)
-   lifx <bulb name> off                                (command will lite off a bulb)
-   lifx <bulb name> off-slow                           (command will lite off/dim a bulb)
-   lifx <bulb name> rgb-[000-255]-[000-255]-[000-255]  (command will set RGB color)
-   lifx <bulb name> state                              (command will check bulb state)
-   lifx help                                           (display this page)
++-----------------------------------------------------------------------------------------+
+|  Supported lifx commands:                                                               |
++-----------------------------------------------------------------------------------------+
+|  lifx                                                (command will list all LIFX bulbs) |
+|  lifx <bulb name> on                                 (command will lite on a bulb)      |
+|  lifx <bulb name> off                                (command will lite off a bulb)     |
+|  lifx <bulb name> off-slow                           (command will lite off/dim a bulb) |
+|  lifx <bulb name> rgb-[000-255]-[000-255]-[000-255]  (command will set RGB color)       |
+|  lifx <bulb name> state                              (command will check bulb state)    |
+|  lifx help                                           (display this page)                |
++-----------------------------------------------------------------------------------------+
    ''')
 
 def helpMclassBlinds():
    print('''
-Supported blinds commands:
-   blinds                               (command will list all blids)
-   blinds <blinds name> up              (command will bring the blinds up)
-   blinds <blinds name> down            (command will bring the blinds down) 
-   blinds <blinds name> hight-[0-100]   (command will shade part of the window in %) 
-   blinds <blinds name> rotate-[0-180]  (command will rotate)
-   blinds <blinds name> state           (command will check the blinds state)
-   blinds help                          (display this page)
++-------------------------------------------------------------------------------------+
+|  Supported blinds commands:                                                         |
++-------------------------------------------------------------------------------------+
+|  blinds                               (command will list all blids)                 |
+|  blinds <blinds name> up              (command will bring the blinds up)            |
+|  blinds <blinds name> down            (command will bring the blinds down)          |
+|  blinds <blinds name> hight-[0-100]   (command will shade part of the window in %)  |
+|  blinds <blinds name> rotate-[0-180]  (command will rotate)                         |
+|  blinds <blinds name> state           (command will check the blinds state)         |
+|  blinds help                          (display this page)                           |
++-------------------------------------------------------------------------------------+
    ''')
 
+def helpMclassCec():
+   print('''
++-----------------------------------------------------------------+
+|  Supported cec commands:                                        |
++-----------------------------------------------------------------+
+|  cec                     (command will list all CEC devices)    |
+|  cec <vm name> on        (command will start CEC device)        |
+|  cec <vm name> off       (command will stop CEC device)         |
+|  cec <vm name> state     (command will check CEC device state)  |
+|  cec help                (display this page)                    |
++-----------------------------------------------------------------+
+   ''')
 
 
  

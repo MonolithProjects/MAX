@@ -13,8 +13,7 @@ mobject = ''
 mvalue = ''
 
 # Import User Interface MAX modules
-import ui_testing
-import ui_cli
+import ui_cli # Mandatory maintenance module
 
 # Import Control MAX modules
 import cl_kvm
@@ -30,13 +29,13 @@ import cl_kvm
 
 # Functions
 def pars_arg():
+   global mclass, mobject, mvalue 
    try:
       arg = sys.argv[1]
    except IndexError:
       arg = 'null'
       return
    if arg == 'cli':
-      global mclass, mobject, mvalue
       mclass, mobject, mvalue = ui_cli.cli()
    else:
       print('This argument is not supported.')
@@ -45,16 +44,19 @@ def pars_arg():
          print('        max.py cli')
       exit(1)
 
-# CLI
+# Operations
 def runCmd():
    global mclass, mobject, mvalue
    
-   # VM
+   # VM (cl_kvm required)
    if mclass == 'vm':
+      vmList = cl_kvm.discoverVMs()
       if mobject == '' and mvalue == '':
-         vmList = cl_kvm.discoverVMs()
          ui_cli.displayVmList(vmList)
-         state = '102'
+         return
+      elif mobject not in vmList:
+         print('Virtual Machine does not exist!')
+         return
       elif mvalue == 'start':
          state = cl_kvm.startVm(mobject)
       elif mvalue == 'stop':
@@ -65,8 +67,7 @@ def runCmd():
          state = cl_kvm.destroyVm(mobject)
       elif mvalue == 'state':
          state = cl_kvm.stateVm(mobject)
-
-      if state is None or state == '102':
+      if state is None:
          print('Success')
       else: 
          if state == '100':
@@ -91,7 +92,12 @@ def runCmd():
       elif mvalue == 'state':
          ui_cli.displayBlindsState()
 
-
+   # CEC
+   if mclass == 'cec':
+      if mobject == '' and mvalue == '':
+         ui_cli.displayCecList()
+      elif mvalue == 'state':
+         ui_cli.displayCecState()
 
 # Main function
 def main():
