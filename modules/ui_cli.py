@@ -92,8 +92,16 @@ def clearCommands():
    mobject = ''
    mvalue = ''
 
-def displayVmList():
-   print('Oops!')
+def displayVmList(vmList):
+   longest = len(max(vmList, key=len))
+   space = longest - 8
+   print('+-' + '-'*longest +'-+')
+   print('| VM list:' + ' ' * space + ' |')
+   print('+-' + '-'*longest +'-+')
+   for vm in sorted(vmList, key=str.lower):
+      space = longest - len(vm)
+      print('| ' + vm + ' ' * space +' |' )
+   print('+-' + '-'*longest +'-+')
 
 def displayVmState():
    print('Oops!')

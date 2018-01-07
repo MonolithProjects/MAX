@@ -24,6 +24,7 @@ import cl_kvm
 # 0-100 = value in %
 # 100   = on
 # 101   = unknown / not acceptable
+# 102   = drop
 
 ############################################################
 
@@ -51,7 +52,9 @@ def runCmd():
    # VM
    if mclass == 'vm':
       if mobject == '' and mvalue == '':
-         ui_cli.displayVmList()
+         vmList = cl_kvm.discoverVMs()
+         ui_cli.displayVmList(vmList)
+         state = '102'
       elif mvalue == 'start':
          state = cl_kvm.startVm(mobject)
       elif mvalue == 'stop':
@@ -63,7 +66,7 @@ def runCmd():
       elif mvalue == 'state':
          state = cl_kvm.stateVm(mobject)
 
-      if state is None:
+      if state is None or state == '102':
          print('Success')
       else: 
          if state == '100':

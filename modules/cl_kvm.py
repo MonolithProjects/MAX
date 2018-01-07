@@ -51,13 +51,26 @@ def testKvmConnection():
    connKvm(0)
 
 # Discover VMs
-def discoverVms():
+def discoverVmsOLD():
    connKvm(100)
    vms = conn.listAllDomains(0)
    if len(vms) != 0:
       return(vms)
    else:
       return('0')
+   connKvm(0)
+
+# Discover VMs (new)
+def discoverVMs():
+   connKvm(100)
+   vms = conn.listAllDomains(0)
+   vmList = []
+   if len(vms) != 0:
+      for vm in vms: 
+         #print(' ' + vm.name())
+         vmName = vm.name()
+         vmList.insert(0, vmName)
+      return(vmList)
    connKvm(0)
 
 # Discover Active VMs
