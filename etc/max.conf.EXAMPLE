@@ -1,0 +1,4 @@
+[MAXglobal]
+IP = 1.1.1.1
+KVM_USER = example
+KVM_PASS = example
