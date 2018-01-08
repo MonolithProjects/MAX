@@ -19,3 +19,6 @@
  VIR_CONNECT_LIST_DOMAINS_HAS_SNAPSHOT
  VIR_CONNECT_LIST_DOMAINS_NO_SNAPSHOT
 
+- CEC deps.:
+ git@github.com:trainman419/python-cec.git
+ or just install it from pip (cec)

@@ -6,7 +6,7 @@ import ConfigParser
 # Read credentials
 config = ConfigParser.ConfigParser()
 config.read("/etc/max.conf")
-IP = config.get("MAXglobal", "IP")
+IP = config.get("cl_kvm", "IP")
 KVM_USER = config.get("MAXglobal", "KVM_USER")
 KVM_PASS = config.get("MAXglobal", "KVM_USER")
 

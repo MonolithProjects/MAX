@@ -1,4 +1,6 @@
-[MAXglobal]
+[cl_kvm]
 IP = 1.1.1.1
 KVM_USER = example
 KVM_PASS = example
+
+[cl_cec]
