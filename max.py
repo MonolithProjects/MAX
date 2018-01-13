@@ -67,16 +67,7 @@ def runCmd():
          state = cl_kvm.destroyVm(mobject)
       elif mvalue == 'state':
          state = cl_kvm.stateVm(mobject)
-      if state is None:
-         print('Success')
-      else: 
-         if state == '100':
-            state = 'active'
-         elif state == '0':
-            state = 'off'
-         elif state == '101':
-            state = 'unable to ' + mvalue
-         print('Virtual Machine ' + mobject + ' is ' + state)
+      ui_cli.displayVmOutput(state)
          
    # Lifx
    if mclass == 'lifx':

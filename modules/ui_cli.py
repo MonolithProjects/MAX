@@ -117,8 +117,16 @@ def displayVmList(vmList):
       print('| ' + vm + ' ' * space +' |' )
    print('+-' + '-'*longest +'-+')
 
-def displayVmState():
-   print('Oops!')
+def displayVmOutput(state):
+   if state == '100':
+      state = 'active'
+   elif state == '0':
+      state = 'off'
+   elif state == '101':
+      state = 'unable to ' + mvalue
+   if state != None :
+      print('Virtual Machine ' + mobject + ' is ' + state)
+
 
 def displayLifxList():
    print('Oops!')
