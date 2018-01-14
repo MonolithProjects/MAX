@@ -123,9 +123,14 @@ def displayVmOutput(state):
    elif state == '0':
       state = 'off'
    elif state == '101':
-      state = 'unable to ' + mvalue
+      state = 'unable to chage the state'
+   
    if state != None :
-      print('Virtual Machine ' + mobject + ' is ' + state)
+      print('+----' + '-'*len(mobject) + '----' + '-'*len(state) + '-+')
+      print('| VM ' + mobject + ' is ' + state + ' |')
+      print('+----' + '-'*len(mobject) + '----' + '-'*len(state) + '-+')
+   else:
+      print('Success')
 
 
 def displayLifxList():
