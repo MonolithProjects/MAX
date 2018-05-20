@@ -4,3 +4,4 @@ KVM_USER = example
 KVM_PASS = example
 
 [cl_cec]
+adapter = foo

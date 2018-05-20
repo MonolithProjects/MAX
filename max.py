@@ -11,12 +11,14 @@ sys.path.append(modulesPath)
 mclass = ''
 mobject = ''
 mvalue = ''
+modulesList = []
 
-# Import User Interface MAX modules
-import ui_cli # Mandatory maintenance module
-
-# Import Control MAX modules
-import cl_kvm
+# Load plugins from modules folder
+for moduleName in os.listdir(modulesPath):
+    if not moduleName.startswith("__") and moduleName.endswith(".py"):
+        moduleName = moduleName[:-3]
+        modulesList.append(moduleName)
+        globals()[moduleName] = __import__(moduleName)
 
 # Values
 # 0     = off / none
@@ -29,7 +31,7 @@ import cl_kvm
 
 # Functions
 def pars_arg():
-   global mclass, mobject, mvalue 
+   global mclass, mobject, mvalue
    try:
       arg = sys.argv[1]
    except IndexError:
@@ -47,7 +49,7 @@ def pars_arg():
 # Operations
 def runCmd():
    global mclass, mobject, mvalue
-   
+
    # VM (cl_kvm required)
    if mclass == 'vm':
       vmList = cl_kvm.discoverVMs()
@@ -68,7 +70,7 @@ def runCmd():
       elif mvalue == 'state':
          state = cl_kvm.stateVm(mobject)
       ui_cli.displayVmOutput(state)
-         
+
    # Lifx
    if mclass == 'lifx':
       if mobject == '' and mvalue == '':
@@ -101,6 +103,5 @@ def main():
    runCmd()
 
 if __name__=="__main__":
-   while True: 
+   while True:
       main()
-

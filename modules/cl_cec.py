@@ -8,15 +8,14 @@ config = ConfigParser.ConfigParser()
 config.read("/etc/max.conf")
 ADAPTER = config.get("cl_cec", "adapter")
 
-def cecList()
+def cecList():
    print('Oops!')
 
-def cecState()
+def cecState():
    print('Oops!')
 
-def cecOn()
+def cecOn():
    print('Oops!')
 
-def cecOff()
+def cecOff():
    print('Oops!')
-
