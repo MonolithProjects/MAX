@@ -31,30 +31,47 @@ for moduleName in os.listdir(modulesPath):
 
 # Functions
 def pars_arg():
-   global mclass, mobject, mvalue
-   try:
-      arg = sys.argv[1]
-   except IndexError:
-      arg = 'null'
-      return
-   if arg == 'cli':
-      mclass, mobject, mvalue = ui_cli.cli()
-   else:
-      print('This argument is not supported.')
-      if 'cli' in str(sys.argv[1:]):
-         print('Did you mean this?')
-         print('        max.py cli')
-      exit(1)
+    global mclass, mobject, mvalue
+    try:
+        arg = sys.argv[1]
+    except IndexError:
+        arg = 'null'
+        return
+    if arg == 'cli':
+        mclass, mobject, mvalue = cli.cli()
+    elif arg in modulesList:
+        print('TEST: found a module...')
+        try:
+          mclass = sys.argv[2]
+        except IndexError:
+            mclass = 'null'
+            return
+        try:
+            mobject = sys.argv[3]
+        except IndexError:
+            mobject = 'null'
+            return
+        try:
+            mvalue = sys.argv[4]
+        except IndexError:
+            mvalue = 'null'
+            return
+    else:
+       print('This argument is not supported.')
+       if 'cli' in str(sys.argv[1:]):
+           print('Did you mean this?')
+           print('        max.py cli')
+       exit(1)
+
+
 
 # Operations
 def runCmd():
-   global mclass, mobject, mvalue
-
-   # VM (cl_kvm required)
+    # VM (cl_kvm required)
    if mclass == 'vm':
       vmList = cl_kvm.discoverVMs()
       if mobject == '' and mvalue == '':
-         ui_cli.displayVmList(vmList)
+         cli.displayVmList(vmList)
          return
       elif mobject not in vmList:
          print('Virtual Machine does not exist!')
@@ -69,28 +86,28 @@ def runCmd():
          state = cl_kvm.destroyVm(mobject)
       elif mvalue == 'state':
          state = cl_kvm.stateVm(mobject)
-      ui_cli.displayVmOutput(state)
+      cli.displayVmOutput(state)
 
    # Lifx
    if mclass == 'lifx':
       if mobject == '' and mvalue == '':
-         ui_cli.displayLifxList()
+         cli.displayLifxList()
       elif mvalue == 'state':
-         ui_cli.displayLifxState()
+         cli.displayLifxState()
 
    # Blinds
    if mclass == 'blinds':
       if mobject == '' and mvalue == '':
-         ui_cli.displayBlindsList()
+         cli.displayBlindsList()
       elif mvalue == 'state':
-         ui_cli.displayBlindsState()
+         cli.displayBlindsState()
 
    # CEC
    if mclass == 'cec':
       if mobject == '' and mvalue == '':
-         ui_cli.displayCecList()
+         cli.displayCecList()
       elif mvalue == 'state':
-         ui_cli.displayCecState()
+         cli.displayCecState()
 
 # Main function
 def main():
