@@ -6,9 +6,9 @@ import ConfigParser
 # Read credentials
 config = ConfigParser.ConfigParser()
 config.read("/etc/max.conf")
-IP = config.get("cl_kvm", "IP")
-KVM_USER = config.get("cl_kvm", "KVM_USER")
-KVM_PASS = config.get("cl_kvm", "KVM_USER")
+IP = config.get("kvm", "IP")
+KVM_USER = config.get("kvm", "KVM_USER")
+KVM_PASS = config.get("kvm", "KVM_USER")
 
 # Request credentials
 def request_cred(credentials, user_data):
@@ -23,9 +23,9 @@ def request_cred(credentials, user_data):
 def readConfig():
    config = ConfigParser.ConfigParser()
    config.read("/etc/max.conf")
-   IP = config.get("cl_kvm", "IP")
-   KVM_USER = config.get("cl_kvm", "KVM_USER")
-   KVM_PASS = config.get("cl_kvm", "KVM_USER")
+   IP = config.get("kvm", "IP")
+   KVM_USER = config.get("kvm", "KVM_USER")
+   KVM_PASS = config.get("kvm", "KVM_USER")
 
 
 # KVM connection
@@ -66,7 +66,7 @@ def discoverVMs():
    vms = conn.listAllDomains(0)
    vmList = []
    if len(vms) != 0:
-      for vm in vms: 
+      for vm in vms:
          #print(' ' + vm.name())
          vmName = vm.name()
          vmList.insert(0, vmName)
@@ -78,7 +78,7 @@ def discoverActiveVms():
    connKvm(100)
    vms = conn.listAllDomains(1)
    if len(vms) != 0:
-      return(vms)  
+      return(vms)
    else:
       return('0')
    connKvm(0)
@@ -88,7 +88,7 @@ def discoverInactiveVms():
    connKvm(100)
    vms = conn.listAllDomains(2)
    if len(vms) != 0:
-      return(vms) 
+      return(vms)
    else:
       return('0')
    connKvm(0)

@@ -1,7 +1,7 @@
 
 import re
 
-#Consider modules Cmd (in cmd) or readline 
+#Consider modules Cmd (in cmd) or readline
 
 def cli():
    global mclass, mobject, mvalue
@@ -16,7 +16,7 @@ def cli():
          mobject = command[i]
       elif i == 2:
          mvalue = command[i]
-   if args > 0: 
+   if args > 0:
       mclass = command[0]
       checkMclass(mclass)
    if args > 1:
@@ -88,7 +88,7 @@ def checkMvalue(mvalue):
          for i in range(0, 100):
             if 'hight-'+str(i) == mvalue:
                return
-         for i in range(0, 180):   
+         for i in range(0, 180):
             if 'rotate-'+str(i) == mvalue:
                return
          helpMclassBlinds()
@@ -124,13 +124,16 @@ def displayVmOutput(state):
       state = 'off'
    elif state == '101':
       state = 'unable to chage the state'
-   
+
    if state != None :
       print('+----' + '-'*len(mobject) + '----' + '-'*len(state) + '-+')
       print('| VM ' + mobject + ' is ' + state + ' |')
       print('+----' + '-'*len(mobject) + '----' + '-'*len(state) + '-+')
    else:
-      print('Success')
+      print('''+------------------+
+|  Success         |
++------------------+''')
+
 
 
 def displayLifxList():
@@ -169,11 +172,11 @@ def helpMclass():
 |  lifx                                 |
 |  vm                                   |
 |  exit                                 |
-+---------------------------------------+   
++---------------------------------------+
 |  Combine with "help" for more details.|
 +---------------------------------------+
    ''')
-   
+
 def helpMclassVm():
    print('''
 +----------------------------------------------------------+
@@ -231,6 +234,3 @@ def helpMclassCec():
 |  cec help                (display this page)                    |
 +-----------------------------------------------------------------+
    ''')
-
-
- 

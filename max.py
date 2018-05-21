@@ -28,10 +28,13 @@ for moduleName in os.listdir(modulesPath):
 # 102   = drop
 
 ############################################################
+#TODO:
+#CLI-less mode state return
+############################################################
 
 # Functions
 def pars_arg():
-    global mclass, mobject, mvalue
+    global mclass, mobject, mvalue, arg
     try:
         arg = sys.argv[1]
     except IndexError:
@@ -40,7 +43,6 @@ def pars_arg():
     if arg == 'cli':
         mclass, mobject, mvalue = cli.cli()
     elif arg in modulesList:
-        print('TEST: found a module...')
         try:
           mclass = sys.argv[2]
         except IndexError:
@@ -64,12 +66,12 @@ def pars_arg():
        exit(1)
 
 
-
 # Operations
 def runCmd():
-    # VM (cl_kvm required)
+    # VM (kvm required)
+   global arg
    if mclass == 'vm':
-      vmList = cl_kvm.discoverVMs()
+      vmList = kvm.discoverVMs()
       if mobject == '' and mvalue == '':
          cli.displayVmList(vmList)
          return
@@ -77,16 +79,17 @@ def runCmd():
          print('Virtual Machine does not exist!')
          return
       elif mvalue == 'start':
-         state = cl_kvm.startVm(mobject)
+         state = kvm.startVm(mobject)
       elif mvalue == 'stop':
-         state = cl_kvm.shutVm(mobject)
+         state = kvm.shutVm(mobject)
       elif mvalue == 'reboot':
-         state = cl_kvm.rebootVm(mobject)
+         state = kvm.rebootVm(mobject)
       elif mvalue == 'poweroff':
-         state = cl_kvm.destroyVm(mobject)
+         state = kvm.destroyVm(mobject)
       elif mvalue == 'state':
-         state = cl_kvm.stateVm(mobject)
-      cli.displayVmOutput(state)
+         state = kvm.stateVm(mobject)
+      if arg == 'cli':
+          cli.displayVmOutput(state)
 
    # Lifx
    if mclass == 'lifx':
@@ -111,13 +114,15 @@ def runCmd():
 
 # Main function
 def main():
-   pars_arg()
+    pars_arg()
+    runCmd()
+    if arg != 'cli':
+        exit(0)
    #vmName = ui_testing.command()        #TEST
-   #print('Test result --------------v')  #TEST
-   #print(mclass)                         #TEST
-   #print(mobject)                        #TEST
-   #print(mvalue)                         #TEST
-   runCmd()
+   # print('Test result --------------v')  #TEST
+   # print(mclass)                         #TEST
+   # print(mobject)                        #TEST
+   # print(mvalue)                         #TEST
 
 if __name__=="__main__":
    while True:
