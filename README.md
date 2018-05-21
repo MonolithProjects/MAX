@@ -12,9 +12,9 @@
 ##### Libvirt deamon listen on TCP ports
   - uncomment LIBVIRTD_ARGS="--listen" in /etc/sysconfig/libvirtd
 
-  - in /etc/libvirt/libvirtd.conf__
-    listen_tls = 0 #for LAN usage__
-    listen_tcp = 1__
+  - in /etc/libvirt/libvirtd.conf  
+    listen_tls = 0 #for LAN usage  
+    listen_tcp = 1  
     listen_addr = "<binded IP>"
 
 #### listAllDomains flags
