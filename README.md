@@ -15,7 +15,7 @@
   - in /etc/libvirt/libvirtd.conf  
     listen_tls = 0 #for LAN usage  
     listen_tcp = 1  
-    listen_addr = "<binded IP>"
+    listen_addr = "binded IP"
 
 #### listAllDomains flags
     all 0
