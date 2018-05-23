@@ -1,7 +1,7 @@
 [kvm]
-IP = 1.1.1.1
-KVM_USER = example
-KVM_PASS = example
+IP = 192.168.160.2
+KVM_USER = max
+KVM_PASS = max
 
 [cl_cec]
 adapter = foo

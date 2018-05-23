@@ -40,9 +40,7 @@ def pars_arg():
     except IndexError:
         arg = 'null'
         return
-    if arg == 'cli':
-        mclass, mobject, mvalue = cli.cli()
-    elif arg in modulesList:
+    if arg in modulesList:
         try:
           mclass = sys.argv[2]
         except IndexError:
@@ -65,6 +63,11 @@ def pars_arg():
            print('        max.py cli')
        exit(1)
 
+def runCli():
+    global mclass, mobject, mvalue
+    if arg == 'cli':
+        while True:
+            mclass, mobject, mvalue = cli.cli()
 
 # Operations
 def runCmd():
@@ -115,15 +118,12 @@ def runCmd():
 # Main function
 def main():
     pars_arg()
+    runCli()
     runCmd()
-    if arg != 'cli':
-        exit(0)
-   #vmName = ui_testing.command()        #TEST
    # print('Test result --------------v')  #TEST
    # print(mclass)                         #TEST
    # print(mobject)                        #TEST
    # print(mvalue)                         #TEST
 
 if __name__=="__main__":
-   while True:
-      main()
+    main()
