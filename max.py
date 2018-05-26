@@ -29,42 +29,29 @@ for moduleName in os.listdir(modulesPath):
 
 ############################################################
 #TODO:
-#CLI-less mode state return
+#CLI - state fix and Success msg
 ############################################################
 
 # Functions
 def pars_arg():
-    global mclass, mobject, mvalue, arg
+    global mclass, mobject, mvalue
     try:
-        arg = sys.argv[1]
+        mclass = sys.argv[1]
+        if mclass == 'cli':
+            return
     except IndexError:
-        arg = 'null'
+        mclass = 'null'
         return
-    if arg == 'cli':
-        return
-        #mclass, mobject, mvalue = cli.cli()
-    elif arg in modulesList:
-        try:
-          mclass = sys.argv[2]
-        except IndexError:
-            mclass = 'null'
-            #return
-        try:
-            mobject = sys.argv[3]
-        except IndexError:
-            mobject = 'null'
-            #return
-        try:
-            mvalue = sys.argv[4]
-        except IndexError:
-            mvalue = 'null'
-            #return
-    else:
-       print('This argument is not supported.')
-       if 'cli' in str(sys.argv[1:]):
-           print('Did you mean this?')
-           print('        max.py cli')
-       exit(1)
+    try:
+        mobject = sys.argv[2]
+    except IndexError:
+        mobject = 'null'
+        #return
+    try:
+        mvalue = sys.argv[3]
+    except IndexError:
+        mvalue = 'null'
+        #return
 
 def runCli():
     global mclass, mobject, mvalue
@@ -73,8 +60,8 @@ def runCli():
 # Operations
 def runCmd():
     # VM (kvm required)
-   global arg, state
-   if mclass == 'vm':
+   global state
+   if mclass == 'kvm':
       vmList = kvm.discoverVMs()
       if mobject == '' and mvalue == '':
          cli.displayVmList(vmList)
@@ -117,14 +104,16 @@ def runCmd():
 
 # Main function
 def main():
+    #global state
     pars_arg()
-    if arg == 'cli':
+    if mclass == 'cli':
         while True:
             runCli()
             state = runCmd()
             cli.displayVmOutput(state)
-    elif arg in modulesList:
+    elif mclass in modulesList:
         runCmd()
+
 
    # print('Test result --------------v')  #TEST
    # print(mclass)                         #TEST
@@ -133,3 +122,4 @@ def main():
 
 if __name__=="__main__":
     main()
+    exit(state)

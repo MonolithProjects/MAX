@@ -6,9 +6,9 @@ import ConfigParser
 # Read credentials
 config = ConfigParser.ConfigParser()
 config.read("/etc/max.conf")
-IP = config.get("kvm", "IP")
-KVM_USER = config.get("kvm", "KVM_USER")
-KVM_PASS = config.get("kvm", "KVM_USER")
+IP = config.get("kvm_module", "IP")
+KVM_USER = config.get("kvm_module", "KVM_USER")
+KVM_PASS = config.get("kvm_module", "KVM_USER")
 
 # Request credentials
 def request_cred(credentials, user_data):
@@ -23,9 +23,9 @@ def request_cred(credentials, user_data):
 def readConfig():
    config = ConfigParser.ConfigParser()
    config.read("/etc/max.conf")
-   IP = config.get("kvm", "IP")
-   KVM_USER = config.get("kvm", "KVM_USER")
-   KVM_PASS = config.get("kvm", "KVM_USER")
+   IP = config.get("kvm_module", "IP")
+   KVM_USER = config.get("kvm_module", "KVM_USER")
+   KVM_PASS = config.get("kvm_module", "KVM_USER")
 
 
 # KVM connection

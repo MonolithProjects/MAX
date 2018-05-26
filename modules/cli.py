@@ -6,7 +6,6 @@ import re
 def cli():
    global mclass, mobject, mvalue
    clearCommands()
-   print(mclass, mobject, mvalue)
    command = raw_input('MAX cli> ')
    command = command.split()
    args = len(command)
@@ -34,14 +33,14 @@ def cli():
 
 
 def checkMclass(mclass):
-   if mclass not in ('vm', 'lifx', 'blinds', 'cec'):
+   if mclass not in ('kvm', 'lifx', 'blinds', 'cec'):
       if mclass == 'exit':
          exit(0)
       helpMclass()
       cli()
 
 def checkMobject(mobject):
-   if mclass == 'vm':
+   if mclass == 'kvm':
       if mobject == 'help' \
       or mobject != '' and mvalue == '':
          helpMclassVm()
@@ -68,7 +67,7 @@ def checkMobject(mobject):
 
 
 def checkMvalue(mvalue):
-   if mclass == 'vm':
+   if mclass == 'kvm':
       if mvalue == 'help' \
       or mvalue not in ('start', 'stop', 'reboot', 'poweroff', 'state'):
          helpMclassVm()
@@ -171,7 +170,7 @@ def helpMclass():
 |  blinds                               |
 |  cec                                  |
 |  lifx                                 |
-|  vm                                   |
+|  kvm                                  |
 |  exit                                 |
 +---------------------------------------+
 |  Combine with "help" for more details.|
