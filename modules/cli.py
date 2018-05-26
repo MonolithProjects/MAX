@@ -6,6 +6,7 @@ import re
 def cli():
    global mclass, mobject, mvalue
    clearCommands()
+   print(mclass, mobject, mvalue)
    command = raw_input('MAX cli> ')
    command = command.split()
    args = len(command)

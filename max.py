@@ -40,22 +40,25 @@ def pars_arg():
     except IndexError:
         arg = 'null'
         return
-    if arg in modulesList:
+    if arg == 'cli':
+        return
+        #mclass, mobject, mvalue = cli.cli()
+    elif arg in modulesList:
         try:
           mclass = sys.argv[2]
         except IndexError:
             mclass = 'null'
-            return
+            #return
         try:
             mobject = sys.argv[3]
         except IndexError:
             mobject = 'null'
-            return
+            #return
         try:
             mvalue = sys.argv[4]
         except IndexError:
             mvalue = 'null'
-            return
+            #return
     else:
        print('This argument is not supported.')
        if 'cli' in str(sys.argv[1:]):
@@ -65,14 +68,12 @@ def pars_arg():
 
 def runCli():
     global mclass, mobject, mvalue
-    if arg == 'cli':
-        while True:
-            mclass, mobject, mvalue = cli.cli()
+    mclass, mobject, mvalue = cli.cli()
 
 # Operations
 def runCmd():
     # VM (kvm required)
-   global arg
+   global arg, state
    if mclass == 'vm':
       vmList = kvm.discoverVMs()
       if mobject == '' and mvalue == '':
@@ -91,8 +92,7 @@ def runCmd():
          state = kvm.destroyVm(mobject)
       elif mvalue == 'state':
          state = kvm.stateVm(mobject)
-      if arg == 'cli':
-          cli.displayVmOutput(state)
+
 
    # Lifx
    if mclass == 'lifx':
@@ -118,8 +118,14 @@ def runCmd():
 # Main function
 def main():
     pars_arg()
-    runCli()
-    runCmd()
+    if arg == 'cli':
+        while True:
+            runCli()
+            state = runCmd()
+            cli.displayVmOutput(state)
+    elif arg in modulesList:
+        runCmd()
+
    # print('Test result --------------v')  #TEST
    # print(mclass)                         #TEST
    # print(mobject)                        #TEST
