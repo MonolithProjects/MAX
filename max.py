@@ -79,6 +79,7 @@ def runCmd():
          state = kvm.destroyVm(mobject)
       elif mvalue == 'state':
          state = kvm.stateVm(mobject)
+      return(state)
 
 
    # Lifx

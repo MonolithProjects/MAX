@@ -129,10 +129,10 @@ def displayVmOutput(state):
       print('+----' + '-'*len(mobject) + '----' + '-'*len(state) + '-+')
       print('| VM ' + mobject + ' is ' + state + ' |')
       print('+----' + '-'*len(mobject) + '----' + '-'*len(state) + '-+')
-   else:
-      print('''+------------------+
-|  Success         |
-+------------------+''')
+#    else:
+#       print('''+------------------+
+# |  Success         |
+# +------------------+''')
 
 
 
@@ -180,15 +180,15 @@ def helpMclass():
 def helpMclassVm():
    print('''
 +----------------------------------------------------------+
-|  Supported vm commands:                                  |
+|  Supported kvm commands:                                 |
 +----------------------------------------------------------+
-|  vm                     (command will list all VMs)      |
-|  vm <vm name> start     (command will start VM)          |
-|  vm <vm name> stop      (command will shutdown VM)       |
-|  vm <vm name> reboot    (command will reboot VM)         |
-|  vm <vm name> poweroff  (command will force poweroff VM) |
-|  vm <vm name> state     (command will check VM state)    |
-|  vm help                (display this page)              |
+|  kvm                    (command will list all VMs)      |
+|  kvm <vm name> start    (command will start VM)          |
+|  kvm <vm name> stop     (command will shutdown VM)       |
+|  kvm <vm name> reboot   (command will reboot VM)         |
+|  kvm <vm name> poweroff (command will force poweroff VM) |
+|  kvm <vm name> state    (command will check VM state)    |
+|  kvm help               (display this page)              |
 +----------------------------------------------------------+
    ''')
 

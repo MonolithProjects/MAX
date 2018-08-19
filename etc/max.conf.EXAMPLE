@@ -1,5 +1,5 @@
 [kvm_module]
-IP = 192.168.160.2
+IP = 192.168.160.1
 KVM_USER = max
 KVM_PASS = max
 

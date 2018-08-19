@@ -1,5 +1,6 @@
 # System modules
 import sys
+import time
 import libvirt
 import ConfigParser
 
@@ -101,6 +102,7 @@ def startVm(vmName):
    if state == True:
       return('101')
    vm.create()
+   return(stateVm(vmName))
    connKvm(0)
 
 # Shutdown VM
@@ -111,6 +113,8 @@ def shutVm(vmName):
    if state == False:
       return('101')
    vm.shutdown()
+   waitNewStateOfVm(vmName)
+   return(stateVm(vmName))
    connKvm(0)
 
 # Shutdown VM
@@ -121,6 +125,7 @@ def rebootVm(vmName):
    if state == False:
       return('101')
    vm.reboot()
+   return(stateVm(vmName))
    connKvm(0)
 
 # Destroy VM
@@ -129,6 +134,7 @@ def destroyVm(vmName):
    vm = conn.lookupByName(vmName)
    state = vm.isActive()
    vm.destroy()
+   return(stateVm(vmName))
    connKvm(0)
 
 # State of the VM
@@ -143,6 +149,19 @@ def stateVm(vmName):
    else:
       return('101')
    connKvm(0)
+
+ # State checker 30 sec
+def waitNewStateOfVm(vmName):
+     counter = 0
+     state1 = stateVm(vmName)
+     state2 = stateVm(vmName)
+     while state1 == state2 or counter < 30 :
+        counter = counter + 1
+        state2 = stateVm(vmName)
+        time.sleep(1)
+
+
+
 
 # XML VM
 def xmlVm(vmName):
