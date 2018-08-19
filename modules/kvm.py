@@ -68,7 +68,6 @@ def discoverVMs():
    vmList = []
    if len(vms) != 0:
       for vm in vms:
-         #print(' ' + vm.name())
          vmName = vm.name()
          vmList.insert(0, vmName)
       return(vmList)
@@ -155,9 +154,11 @@ def waitNewStateOfVm(vmName):
      counter = 0
      state1 = stateVm(vmName)
      state2 = stateVm(vmName)
-     while state1 == state2 or counter < 30 :
-        counter = counter + 1
+     while state1 == state2:
+        counter += 1
         state2 = stateVm(vmName)
+        if counter == 30:
+            break
         time.sleep(1)
 
 

@@ -1,5 +1,5 @@
 
-import re
+import re, sys
 
 #Consider modules Cmd (in cmd) or readline
 
@@ -124,6 +124,8 @@ def displayVmOutput(state):
       state = 'off'
    elif state == '101':
       state = 'unable to chage the state'
+   elif state == '200':
+      state = 'not there :)'
 
    if state != None :
       print('+----' + '-'*len(mobject) + '----' + '-'*len(state) + '-+')

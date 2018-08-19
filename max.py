@@ -24,8 +24,8 @@ for moduleName in os.listdir(modulesPath):
 # 0     = off / none
 # 0-100 = value in %
 # 100   = on
-# 101   = unknown / not acceptable
-# 102   = drop
+# 101   = unknown
+# 200   = not applicable
 
 ############################################################
 #TODO:
@@ -68,7 +68,7 @@ def runCmd():
          return
       elif mobject not in vmList:
          print('Virtual Machine does not exist!')
-         return
+         return('200')
       elif mvalue == 'start':
          state = kvm.startVm(mobject)
       elif mvalue == 'stop':
