@@ -164,7 +164,6 @@ def waitNewStateOfVm(mObject):
         if counter == 60:
             return('101')
 
-
 # XML VM
 def xmlVm(mObject):
    connKvm(100)
