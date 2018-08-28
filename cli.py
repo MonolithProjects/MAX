@@ -1,7 +1,8 @@
 
 import re
 
-#Consider modules Cmd (in cmd) or readline
+# OBSOLETE CLI!!!!!!!!!!!!!!!!
+# ONLY FOR REFERENCE
 
 def cli():
    global mclass, mobject, mvalue
