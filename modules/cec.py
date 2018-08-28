@@ -1,3 +1,5 @@
+#CEC MAX module
+
 # System modules
 import sys
 import cec
