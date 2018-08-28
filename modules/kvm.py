@@ -69,8 +69,8 @@ def discoverVMs():
    if len(vms) != 0:
       for vm in vms:
          #print(' ' + vm.name())
-         vmName = vm.name()
-         vmList.insert(0, vmName)
+         mObject = vm.name()
+         vmList.insert(0, mObject)
       return(vmList)
    connKvm(0)
 
@@ -95,52 +95,54 @@ def discoverInactiveVms():
    connKvm(0)
 
 # Start VM
-def startVm(vmName):
+def start(mObject):
    connKvm(100)
-   vm = conn.lookupByName(vmName)
-   state = vm.isActive()
-   if state == True:
-      return('101')
-   vm.create()
-   return(stateVm(vmName))
-   connKvm(0)
-
-# Shutdown VM
-def shutVm(vmName):
-   connKvm(100)
-   vm = conn.lookupByName(vmName)
+   vm = conn.lookupByName(mObject)
    state = vm.isActive()
    if state == False:
-      return('101')
-   vm.shutdown()
-   waitNewStateOfVm(vmName)
-   return(stateVm(vmName))
+      vm.create()
+   state = status(mObject)
+   return(state)
    connKvm(0)
 
 # Shutdown VM
-def rebootVm(vmName):
+def stop(mObject):
    connKvm(100)
-   vm = conn.lookupByName(vmName)
+   vm = conn.lookupByName(mObject)
+   state = vm.isActive()
+   if state == True:
+      vm.shutdown()
+      state = waitNewStateOfVm(mObject)
+   if state <= 101:
+       state = status(mObject)
+   return(state)
+   connKvm(0)
+
+# Shutdown VM
+def rebootVm(mObject):
+   connKvm(100)
+   vm = conn.lookupByName(mObject)
    state = vm.isActive()
    if state == False:
       return('101')
    vm.reboot()
-   return(stateVm(vmName))
+   return(status(mObject))
    connKvm(0)
 
 # Destroy VM
-def destroyVm(vmName):
+def destroy(mObject):
    connKvm(100)
-   vm = conn.lookupByName(vmName)
+   vm = conn.lookupByName(mObject)
    state = vm.isActive()
-   vm.destroy()
-   return(stateVm(vmName))
+   if state == True:
+       vm.destroy()
+   return(status(mObject))
    connKvm(0)
 
-# State of the VM
-def stateVm(vmName):
+# Status of the VM
+def status(mObject):
    connKvm(100)
-   vm = conn.lookupByName(vmName)
+   vm = conn.lookupByName(mObject)
    state = vm.isActive()
    if state == True:
       return('100')
@@ -150,23 +152,23 @@ def stateVm(vmName):
       return('101')
    connKvm(0)
 
- # State checker 30 sec
-def waitNewStateOfVm(vmName):
+ # Status checker 30 sec
+def waitNewStateOfVm(mObject):
      counter = 0
-     state1 = stateVm(vmName)
-     state2 = stateVm(vmName)
-     while state1 == state2 or counter < 30 :
+     state1 = status(mObject)
+     state2 = status(mObject)
+     while state1 == state2:
         counter = counter + 1
-        state2 = stateVm(vmName)
-        time.sleep(1)
-
-
+        state2 = status(mObject)
+        time.sleep(0.5)
+        if counter == 60:
+            return('101')
 
 
 # XML VM
-def xmlVm(vmName):
+def xmlVm(mObject):
    connKvm(100)
-   vm = conn.lookupByName(vmName)
+   vm = conn.lookupByName(mObject)
    raw_xml = vm.XMLDesc(0)
    print(raw_xml)
    connKvm(0)
