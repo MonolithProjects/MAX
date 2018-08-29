@@ -14,11 +14,12 @@ mAction = ''
 modulesList = []
 
 # Load plugins from modules folder
-for moduleName in os.listdir(modulesPath):
-    if not moduleName.startswith("__") and moduleName.endswith(".py"):
-        moduleName = moduleName[:-3]
-        modulesList.append(moduleName)
-        globals()[moduleName] = __import__(moduleName)
+def loadModules():
+    for moduleName in os.listdir(modulesPath):
+        if not moduleName.startswith("__") and moduleName.endswith(".py"):
+            moduleName = moduleName[:-3]
+            modulesList.append(moduleName)
+            globals()[moduleName] = __import__(moduleName)
 
 # Values
 # 0     = off / none
@@ -58,6 +59,7 @@ def runCmd():
 
 # Main function
 def main():
+    loadModules()
     pars_arg()
     runCmd()
 
